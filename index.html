@@ -1,24 +1,121 @@
-  <h1>Simulador de Probabilidades</h1>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <title>Vampire the Requiem: Falha Crítica</title>
+  <style>
+    /* Estilo básico para a página */
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+      background-color: #111;
+      color: #eee;
+    }
+    header {
+      background-color: #600;
+      padding: 1rem;
+      text-align: center;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2em;
+      color: #fff;
+    }
+    main {
+      max-width: 600px;
+      margin: 2rem auto;
+      background-color: #222;
+      padding: 1.5rem;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+    }
+    h2 {
+      color: #c33;
+    }
+    label {
+      display: inline-block;
+      margin-top: 0.5rem;
+      margin-bottom: 0.2rem;
+      font-weight: bold;
+    }
+    input[type="number"],
+    input[type="text"] {
+      width: 100%;
+      padding: 0.5rem;
+      margin-bottom: 1rem;
+      border: 1px solid #444;
+      border-radius: 4px;
+      background-color: #333;
+      color: #eee;
+      font-size: 1rem;
+    }
+    input[type="checkbox"] {
+      margin-right: 0.5rem;
+      transform: scale(1.2);
+      cursor: pointer;
+    }
+    button {
+      background-color: #900;
+      color: #fff;
+      border: none;
+      padding: 0.75rem 1.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #c00;
+    }
+    pre {
+      background-color: #333;
+      padding: 1rem;
+      border-radius: 4px;
+      white-space: pre-wrap; /* permite quebra de linha automática se precisar */
+    }
+    footer {
+      text-align: center;
+      color: #444;
+      margin: 2rem 0;
+    }
+  </style>
+</head>
+<body>
 
-  <label for="numDados">Número de Dados:</label>
-  <input type="number" id="numDados" value="5" /><br><br>
+  <header>
+    <h1>Vampire the Requiem: Falha Crítica</h1>
+  </header>
 
-  <label for="valoresAgain">Valores de rerolagem (separados por vírgula):</label>
-  <input type="text" id="valoresAgain" placeholder="Ex: 10 or 8,9,10" /><br><br>
+  <main>
+    <h2>Simulador de Probabilidades</h2>
 
-  <input type="checkbox" id="checkReroll" />
-  <label for="checkReroll">ROTE (reroll results < 7 on first roll)</label><br><br>
+    <label for="numDados">Número de Dados:</label>
+    <input type="number" id="numDados" value="5" />
 
-  <button onclick="calcularEMostrar()">Calcular</button>
+    <label for="valoresAgain">Valores de rerolagem (separados por vírgula):</label>
+    <input type="text" id="valoresAgain" placeholder="Ex: 10 ou 8,9,10" />
 
-  <h2>Resultados</h2>
-  <pre id="resultadosArea"></pre>
+    <div style="margin-bottom: 1rem;">
+      <input type="checkbox" id="checkReroll" />
+      <label for="checkReroll" style="display:inline; font-weight: normal;">
+        ROTE (rerrollar dados abaixo de 7 na primeira rolagem)
+      </label>
+    </div>
+
+    <button onclick="calcularEMostrar()">Calcular</button>
+
+    <h2>Resultados</h2>
+    <pre id="resultadosArea"></pre>
+  </main>
+
+  <footer>
+    <p>Desenvolvido para demonstração de probabilidades.</p>
+  </footer>
 
   <script>
     function calcularProbabilidade(numDados, numSimulacoes = 500000, again = [], rerollBelow7FirstTime = false) {
-      // Para armazenar a contagem de sucessos finais
       const contagemResultados = {};
-
       let falhasCriticas = 0;
 
       for (let i = 0; i < numSimulacoes; i++) {
@@ -26,29 +123,26 @@
         let rolouMaiorQue7 = false;
         let rolouUmaFalha = false;
 
-        // --- Primeira rolagem ---
-        // Rola `numDados` uma única vez
+        // Primeira rolagem
         const dadosPrimeiraRolagem = [];
         for (let d = 0; d < numDados; d++) {
           dadosPrimeiraRolagem.push(Math.floor(Math.random() * 10) + 1);
         }
 
-        // Lista para guardar os dados extras que surgirem de "again"
         let dadosExtras = [];
 
         for (let dado of dadosPrimeiraRolagem) {
           let final = dado;
 
-          // Se ROTE estiver ativo, rerolla resultados abaixo de 7 (somente na primeira rolagem)
+          // Rerrollar se < 7 (ROTE) somente na primeira rolagem
           if (rerollBelow7FirstTime && final < 7) {
             final = Math.floor(Math.random() * 10) + 1;
           }
 
-          // Avalia o valor do dado
+          // Avaliar valor do dado
           if (again.includes(final)) {
             sucessos++;
             rolouMaiorQue7 = true;
-            // Acumula "1 dado extra" para rolagem subsequente
             dadosExtras.push(1);
           } else if (final >= 8) {
             sucessos++;
@@ -58,7 +152,7 @@
           }
         }
 
-        // --- Rolagens subsequentes (for again) ---
+        // Rolagens extras
         while (dadosExtras.reduce((a, b) => a + b, 0) > 0) {
           const qtd = dadosExtras.reduce((a, b) => a + b, 0);
           dadosExtras = [];
@@ -78,28 +172,27 @@
           }
         }
 
-        // Verificar se foi falha crítica (pelo menos um 1 e nenhum sucesso)
+        // Verificar se foi falha crítica
         if (rolouUmaFalha && !rolouMaiorQue7) {
           falhasCriticas++;
         }
 
-        // Contabiliza no contagemResultados
+        // Atualiza contagem
         if (contagemResultados[sucessos] === undefined) {
           contagemResultados[sucessos] = 0;
         }
         contagemResultados[sucessos]++;
       }
 
-      // Agora calcula probabilidades
+      // Calcular probabilidades
       const probabilidade = {};
       for (let key in contagemResultados) {
         probabilidade[key] = contagemResultados[key] / numSimulacoes;
       }
 
-      // Falha Crítica
       const probabilidadeFalhaCritica = falhasCriticas / numSimulacoes;
 
-      // Probabilidade de falha (<=0 sucessos) — mas removendo a parte que é falha crítica
+      // Prob de falha (<= 0 sucessos) - subtrair a falha crítica
       let sumFalhasOuMenos = 0;
       for (let resultado in probabilidade) {
         const r = parseInt(resultado, 10);
@@ -109,7 +202,7 @@
       }
       const probabilidadeFalha = sumFalhasOuMenos - probabilidadeFalhaCritica;
 
-      // Sucesso crítico = 5 ou mais sucessos
+      // Sucesso crítico (5 ou + sucessos)
       let probabilidadeSucessoCritico = 0;
       for (let resultado in probabilidade) {
         const r = parseInt(resultado, 10);
@@ -118,12 +211,11 @@
         }
       }
 
-      // Sucesso (comum) = 1 - (prob. total de falha + prob. de sucesso crítico)
-      const probabilidadeSucesso =
-        1 - sumFalhasOuMenos - probabilidadeSucessoCritico;
+      // Sucesso comum
+      const probabilidadeSucesso = 1 - sumFalhasOuMenos - probabilidadeSucessoCritico;
 
       return {
-        probabilidade,                // distribuição completa
+        probabilidade,
         probabilidadeFalhaCritica,
         probabilidadeFalha,
         probabilidadeSucesso,
@@ -134,11 +226,9 @@
     function calcularEMostrar() {
       const numDados = parseInt(document.getElementById("numDados").value, 10);
 
-      // Pegar valores 'again' em uma lista (por ex., "10" ou "8,9,10")
       const rawAgain = document.getElementById("valoresAgain").value.trim();
       let listaAgain = [];
       if (rawAgain) {
-        // ex: "8,9,10" -> [8, 9, 10]
         listaAgain = rawAgain
           .split(",")
           .map(x => parseInt(x.trim(), 10))
@@ -146,9 +236,8 @@
       }
 
       const rerollOption = document.getElementById("checkReroll").checked;
-
-      // Chamar a função de cálculo
       const numSimulacoes = 500000; // Ajuste conforme necessário
+
       const {
         probabilidade,
         probabilidadeFalhaCritica,
@@ -157,16 +246,15 @@
         probabilidadeSucessoCritico
       } = calcularProbabilidade(numDados, numSimulacoes, listaAgain, rerollOption);
 
-      // Monta a string de resultados
       let resultadosStr = "Distribuição de sucessos:\n";
-      // Ordenar as chaves numéricas
       const sortedKeys = Object.keys(probabilidade)
                                .map(k => parseInt(k, 10))
-                               .sort((a,b) => a-b);
+                               .sort((a,b) => a - b);
 
       for (let key of sortedKeys) {
-        resultadosStr += `Resultado ${key}: ${(probabilidade[key]*100).toFixed(2)}%\n`;
+        resultadosStr += `Resultado ${key}: ${(probabilidade[key] * 100).toFixed(2)}%\n`;
       }
+
       resultadosStr += "\n";
       resultadosStr += `Falha Crítica: ${(probabilidadeFalhaCritica * 100).toFixed(2)}%\n`;
       resultadosStr += `Falha: ${(probabilidadeFalha * 100).toFixed(2)}%\n`;
@@ -176,3 +264,6 @@
       document.getElementById("resultadosArea").textContent = resultadosStr;
     }
   </script>
+
+</body>
+</html>
