@@ -4,82 +4,138 @@
   <meta charset="utf-8">
   <title>Vampire the Requiem: Falha Crítica</title>
   <style>
-    /* Estilo básico para a página */
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-      background-color: #111;
-      color: #eee;
-    }
-    header {
-      background-color: #600;
-      padding: 1rem;
-      text-align: center;
-    }
-    header h1 {
-      margin: 0;
-      font-size: 2em;
-      color: #fff;
-    }
-    main {
-      max-width: 600px;
-      margin: 2rem auto;
-      background-color: #222;
-      padding: 1.5rem;
-      border-radius: 8px;
-      box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
-    }
-    h2 {
-      color: #c33;
-    }
-    label {
-      display: inline-block;
-      margin-top: 0.5rem;
-      margin-bottom: 0.2rem;
-      font-weight: bold;
-    }
-    input[type="number"],
-    input[type="text"] {
-      width: 100%;
-      padding: 0.5rem;
-      margin-bottom: 1rem;
-      border: 1px solid #444;
-      border-radius: 4px;
-      background-color: #333;
-      color: #eee;
-      font-size: 1rem;
-    }
-    input[type="checkbox"] {
-      margin-right: 0.5rem;
-      transform: scale(1.2);
-      cursor: pointer;
-    }
-    button {
-      background-color: #900;
-      color: #fff;
-      border: none;
-      padding: 0.75rem 1.5rem;
-      font-size: 1rem;
-      cursor: pointer;
-      border-radius: 4px;
-      transition: background-color 0.3s ease;
-    }
-    button:hover {
-      background-color: #c00;
-    }
-    pre {
-      background-color: #333;
-      padding: 1rem;
-      border-radius: 4px;
-      white-space: pre-wrap; /* permite quebra de linha automática se precisar */
-    }
-    footer {
-      text-align: center;
-      color: #444;
-      margin: 2rem 0;
-    }
-  </style>
+		body {
+			margin: 0;
+			padding: 0;
+			font-family: Arial, sans-serif;
+			background-color: #111;
+			color: #eee;
+		}
+		
+		/* Estilo do header */
+		header {
+			background-color: #600;
+			padding: 1rem;
+			text-align: center;
+		}
+		
+		header h1 {
+			margin: 0;
+			font-size: 2em;
+			color: #fff;
+		}
+		
+		/* Área principal */
+		main {
+			max-width: 600px;
+			margin: 2rem auto;
+			background-color: #222;
+			padding: 1.5rem;
+			border-radius: 8px;
+			box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+		}
+		
+		h2 {
+			color: #c33;
+		}
+		
+		/* Labels em geral */
+		label {
+			display: inline-block;
+			margin-top: 0.5rem;
+			margin-bottom: 0.2rem;
+			font-weight: bold;
+		}
+		
+		/* Inputs de texto/número */
+		input[type="number"],
+		input[type="text"] {
+			width: 100%;
+			padding: 0.5rem;
+			margin-bottom: 1rem;
+			border: 1px solid #444;
+			border-radius: 4px;
+			background-color: #333;
+			color: #eee;
+			font-size: 1rem;
+		}
+		
+		/* Checkbox */
+		input[type="checkbox"] {
+			margin-right: 0.5rem;
+			transform: scale(1.2);
+			cursor: pointer;
+		}
+		
+		/* Botões */
+		button {
+			background-color: #900;
+			color: #fff;
+			border: none;
+			padding: 0.75rem 1.5rem;
+			font-size: 1rem;
+			cursor: pointer;
+			border-radius: 4px;
+			transition: background-color 0.3s ease;
+		}
+		
+		button:hover {
+			background-color: #c00;
+		}
+		
+		/* Formatação de pré-formatados */
+		pre {
+			background-color: #333;
+			padding: 1rem;
+			border-radius: 4px;
+			white-space: pre-wrap;
+		}
+		
+		/* Rodapé */
+		footer {
+			text-align: center;
+			color: #444;
+			margin: 2rem 0;
+		}
+		
+		/* Estilo para a área de drop */
+		#drop-container {
+			border: 2px dashed #c33;
+			border-radius: 8px;
+			padding: 2rem;
+			text-align: center;
+			margin-top: 1rem;
+			transition: background-color 0.3s ease;
+		}
+		
+		#drop-container.dragover {
+			background-color: #333;
+		}
+		
+		#drop-container p {
+			margin: 0;
+			font-size: 1.2rem;
+		}
+		
+		/* Estilo do select dentro do #drop-container */
+		#drop-container select {
+			width: 100%;
+			padding: 0.5rem;
+			margin-top: 0.5rem;
+			margin-bottom: 1rem;
+			border: 1px solid #444;
+			border-radius: 4px;
+			background-color: #333;
+			color: #eee;
+			font-size: 1rem;
+			cursor: pointer;
+		}
+		
+		#drop-container option {
+			background-color: #333;
+			color: #eee;
+		}
+</style>
 </head>
 <body>
 
@@ -95,6 +151,21 @@
 
     <label for="valoresAgain">Valores de rerolagem (separados por vírgula):</label>
     <input type="text" id="valoresAgain" placeholder="Ex: 10 ou 8,9,10" />
+
+	<div id="drop-container">
+    <label for="TargetingLabel">Target Location:</label>
+	<select id="TargetingInput" name="body-part">
+		<option id="Targeting-List" value="0">None</option>
+		<option id="Targeting-List" value="2">Braço (-2)</option>
+		<option id="Targeting-List" value="2">Perna (-2)</option>
+		<option id="Targeting-List" value="3">Cabeça (-3)</option>
+		<option id="Targeting-List" value="3">Coração (-3)</option>
+		<option id="Targeting-List" value="4">Mão (-4)</option>
+		<option id="Targeting-List" value="5">Olho (-5)</option>
+	</select>
+	</div>
+	
+	<br>
 
     <div style="margin-bottom: 1rem;">
       <input type="checkbox" id="checkReroll" />
@@ -225,6 +296,8 @@
 
     function calcularEMostrar() {
       const numDados = parseInt(document.getElementById("numDados").value, 10);
+	  
+	  const tagetLocation = parseInt(document.getElementById("TargetingInput").value, 10);
 
       const rawAgain = document.getElementById("valoresAgain").value.trim();
       let listaAgain = [];
@@ -244,7 +317,7 @@
         probabilidadeFalha,
         probabilidadeSucesso,
         probabilidadeSucessoCritico
-      } = calcularProbabilidade(numDados, numSimulacoes, listaAgain, rerollOption);
+      } = calcularProbabilidade(numDados-tagetLocation, numSimulacoes, listaAgain, rerollOption);
 
       let resultadosStr = "Distribuição de sucessos:\n";
       const sortedKeys = Object.keys(probabilidade)
