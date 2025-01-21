@@ -1,342 +1,575 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="utf-8">
-  <title>Vampire the Requiem: Falha Crítica</title>
-  <style>
-		body {
-			margin: 0;
-			padding: 0;
-			font-family: Arial, sans-serif;
-			background-color: #111;
-			color: #eee;
-		}
-		
-		/* Estilo do header */
-		header {
-			background-color: #600;
-			padding: 1rem;
-			text-align: center;
-		}
-		
-		header h1 {
-			margin: 0;
-			font-size: 2em;
-			color: #fff;
-		}
-		
-		/* Área principal */
-		main {
-			max-width: 600px;
-			margin: 2rem auto;
-			background-color: #222;
-			padding: 1.5rem;
-			border-radius: 8px;
-			box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
-		}
-		
-		h2 {
-			color: #c33;
-		}
-		
-		/* Labels em geral */
-		label {
-			display: inline-block;
-			margin-top: 0.5rem;
-			margin-bottom: 0.2rem;
-			font-weight: bold;
-		}
-		
-		/* Inputs de texto/número */
-		input[type="number"],
-		input[type="text"] {
-			width: 100%;
-			padding: 0.5rem;
-			margin-bottom: 1rem;
-			border: 1px solid #444;
-			border-radius: 4px;
-			background-color: #333;
-			color: #eee;
-			font-size: 1rem;
-		}
-		
-		/* Checkbox */
-		input[type="checkbox"] {
-			margin-right: 0.5rem;
-			transform: scale(1.2);
-			cursor: pointer;
-		}
-		
-		/* Botões */
-		button {
-			background-color: #900;
-			color: #fff;
-			border: none;
-			padding: 0.75rem 1.5rem;
-			font-size: 1rem;
-			cursor: pointer;
-			border-radius: 4px;
-			transition: background-color 0.3s ease;
-		}
-		
-		button:hover {
-			background-color: #c00;
-		}
-		
-		/* Formatação de pré-formatados */
-		pre {
-			background-color: #333;
-			padding: 1rem;
-			border-radius: 4px;
-			white-space: pre-wrap;
-		}
-		
-		/* Rodapé */
-		footer {
-			text-align: center;
-			color: #444;
-			margin: 2rem 0;
-		}
-		
-		/* Estilo para a área de drop */
-		#drop-container {
-			border: 2px dashed #c33;
-			border-radius: 8px;
-			padding: 2rem;
-			text-align: center;
-			margin-top: 1rem;
-			transition: background-color 0.3s ease;
-		}
-		
-		#drop-container.dragover {
-			background-color: #333;
-		}
-		
-		#drop-container p {
-			margin: 0;
-			font-size: 1.2rem;
-		}
-		
-		/* Estilo do select dentro do #drop-container */
-		#drop-container select {
-			width: 100%;
-			padding: 0.5rem;
-			margin-top: 0.5rem;
-			margin-bottom: 1rem;
-			border: 1px solid #444;
-			border-radius: 4px;
-			background-color: #333;
-			color: #eee;
-			font-size: 1rem;
-			cursor: pointer;
-		}
-		
-		#drop-container option {
-			background-color: #333;
-			color: #eee;
-		}
-</style>
+    <meta charset="utf-8">
+    <title>Vampire the Requiem: Falha Crítica</title>
+
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <link rel="stylesheet" href="<link rel="stylesheet" href="https://Fernando-Carvalho-Nogueira.github.io/vamp_calculator/style.css">">
 </head>
+
 <body>
 
-  <header>
-    <h1>Vampire the Requiem: Falha Crítica</h1>
-  </header>
+    <header>
+        <h1>Vampire the Requiem: Falha Crítica</h1>
+    </header>
 
-  <main>
-    <h2>Simulador de Probabilidades</h2>
+    <main>
 
-    <label for="numDados">Número de Dados:</label>
-    <input type="number" id="numDados" value="5" />
+        <div class="tabs">
+            <div class="modulo active" onclick="showModulo('rolagemSimples')">Rolagem Simples</div>
+            <div class="modulo" onclick="showModulo('rolagemDisputada')">Disputa</div>
+        </div>
 
-    <label for="valoresAgain">Valores de rerolagem (separados por vírgula):</label>
-    <input type="text" id="valoresAgain" placeholder="Ex: 10 ou 8,9,10" />
+        <div id="rolagemDisputada" class="modulo-content">
+            <h2>Simulador de Disputas</h2>
 
-	<div id="drop-container">
-    <label for="TargetingLabel">Target Location:</label>
-	<select id="TargetingInput" name="body-part">
-		<option id="Targeting-List" value="0">None</option>
-		<option id="Targeting-List" value="2">Braço (-2)</option>
-		<option id="Targeting-List" value="2">Perna (-2)</option>
-		<option id="Targeting-List" value="3">Cabeça (-3)</option>
-		<option id="Targeting-List" value="3">Coração (-3)</option>
-		<option id="Targeting-List" value="4">Mão (-4)</option>
-		<option id="Targeting-List" value="5">Olho (-5)</option>
-	</select>
-	</div>
-	
-	<br>
+            <label for="numDadosAtk">Número de Dados do Atacante:</label>
+            <input type="number" id="numDadosAtk" value="5" />
 
-    <div style="margin-bottom: 1rem;">
-      <input type="checkbox" id="checkReroll" />
-      <label for="checkReroll" style="display:inline; font-weight: normal;">
-        ROTE (rerrollar dados abaixo de 7 na primeira rolagem)
-      </label>
-    </div>
 
-    <button onclick="calcularEMostrar()">Calcular</button>
+            <label for="numDadosDef">Número de Dados do Defensor:</label>
+            <input type="number" id="numDadosDef" value="5" />
 
-    <h2>Resultados</h2>
-    <pre id="resultadosArea"></pre>
-  </main>
+            <label for="numDadosPen">Penalidade Imposta Ao Atacante</label>
+            <input type="number" id="atkPenalidade" value="0" />
 
-  <footer>
-    <p>Desenvolvido para demonstração de probabilidades.</p>
-  </footer>
+            <div id="textResult" class="tab-content active">
+                <h2>Chance de Sucesso:</h2>
+                <pre id="chanceSucesso"></pre>
+            </div>
 
-  <script>
-    function calcularProbabilidade(numDados, numSimulacoes = 500000, again = [], rerollBelow7FirstTime = false) {
-      const contagemResultados = {};
-      let falhasCriticas = 0;
+        </div>
 
-      for (let i = 0; i < numSimulacoes; i++) {
-        let sucessos = 0;
-        let rolouMaiorQue7 = false;
-        let rolouUmaFalha = false;
+        <div id="rolagemSimples" class="modulo-content active">
+            <h2>Simulador de Probabilidades</h2>
 
-        // Primeira rolagem
-        const dadosPrimeiraRolagem = [];
-        for (let d = 0; d < numDados; d++) {
-          dadosPrimeiraRolagem.push(Math.floor(Math.random() * 10) + 1);
-        }
+            <label for="numDados">Número de Dados:</label>
+            <input type="number" id="numDados" value="5" />
 
-        let dadosExtras = [];
+            <label for="valoresAgain">Valores de rerolagem (separados por vírgula):</label>
+            <input type="text" id="valoresAgain" placeholder="Ex: 10 ou 8,9,10" />
 
-        for (let dado of dadosPrimeiraRolagem) {
-          let final = dado;
+            <label for="TargetingLabel">Target Location:</label>
+            <span class="toggle-icon" id="targetIcon" onclick="toggleTarget()">[-]</span>
 
-          // Rerrollar se < 7 (ROTE) somente na primeira rolagem
-          if (rerollBelow7FirstTime && final < 7) {
-            final = Math.floor(Math.random() * 10) + 1;
-          }
+            <div id="targetContainer" class="container" style="display: none;">
+                <select id="TargetingInput" name="body-part">
+                    <option id="Targeting-List" value="0">None</option>
+                    <option id="Targeting-List" value="2">Braço (-2)</option>
+                    <option id="Targeting-List" value="2">Perna (-2)</option>
+                    <option id="Targeting-List" value="3">Cabeça (-3)</option>
+                    <option id="Targeting-List" value="3">Coração (-3)</option>
+                    <option id="Targeting-List" value="4">Mão (-4)</option>
+                    <option id="Targeting-List" value="5">Olho (-5)</option>
+                </select>
+            </div>
 
-          // Avaliar valor do dado
-          if (again.includes(final)) {
-            sucessos++;
-            rolouMaiorQue7 = true;
-            dadosExtras.push(1);
-          } else if (final >= 8) {
-            sucessos++;
-            rolouMaiorQue7 = true;
-          } else if (final === 1) {
-            rolouUmaFalha = true;
-          }
-        }
 
-        // Rolagens extras
-        while (dadosExtras.reduce((a, b) => a + b, 0) > 0) {
-          const qtd = dadosExtras.reduce((a, b) => a + b, 0);
-          dadosExtras = [];
+            <div style="margin-top:1rem;">
+                <label for="CaçadaLabel" style="display: inline;">
+                    Modificadores de Caçada
+                </label>
+                <span class="toggle-icon" id="cacadaIcon" onclick="toggleCacada()">[-]</span>
+            </div>
 
-          for (let j = 0; j < qtd; j++) {
-            let dado = Math.floor(Math.random() * 10) + 1;
-            if (again.includes(dado)) {
-              sucessos++;
-              rolouMaiorQue7 = true;
-              dadosExtras.push(1);
-            } else if (dado >= 8) {
-              sucessos++;
-              rolouMaiorQue7 = true;
-            } else if (dado === 1) {
-              rolouUmaFalha = true;
+            <!-- Container que será expandido/recolhido -->
+            <div id="cacadaContainer" class="container" style="display: none;">
+
+                <div class="left-div">
+                    <label for="qtdPessoas">Quantidade de Vítimas:</label>
+                    <input id="qtdPessoas" type="number" id="numPessoas" value="1" />
+                </div>
+
+                <div class="right-div">
+                    <label for="qtdHoras">Quantidade de Horas:</label>
+                    <input id="qtdHoras" type="number" id="numHoras" value="1" />
+                </div>
+            </div>
+
+            <br>
+
+            <div style="margin-bottom: 1rem;">
+                <input type="checkbox" id="checkReroll" />
+                <label for="checkReroll" style="display:inline; font-weight: normal;">
+                    ROTE Action
+                </label>
+            </div>
+
+            <button onclick="calcularEMostrar()">Calcular</button>
+            <div class="tabs">
+                <div class="tab active" onclick="showTab('textResult')">Texto</div>
+                <div class="tab" onclick="showTab('chartResult')">Gráfico</div>
+            </div>
+
+            <div id="textResult" class="tab-content active">
+                <h2>Resultados</h2>
+                <pre id="resultadosArea"></pre>
+            </div>
+
+            <div id="chartResult" class="tab-content">
+                <h2>Gráfico de Resultados</h2>
+                <div id="chart_div"></div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <p>Desenvolvido para campanha Rio 1900.</p>
+    </footer>
+
+    <script>
+        function calcularProbabilidade(numDados, numSimulacoes = 1000000, again = [], rerollBelow7FirstTime = false) {
+            const contagemResultados = {};
+            let falhasCriticas = 0;
+
+            for (let i = 0; i < numSimulacoes; i++) {
+                let sucessos = 0;
+                let rolouMaiorQue7 = false;
+                let rolouUmaFalha = false;
+
+                // Primeira rolagem
+                const dadosPrimeiraRolagem = [];
+                for (let d = 0; d < numDados; d++) {
+                    dadosPrimeiraRolagem.push(Math.floor(Math.random() * 10) + 1);
+                }
+
+                let dadosExtras = [];
+
+                for (let dado of dadosPrimeiraRolagem) {
+                    let final = dado;
+
+                    // Rerrollar se < 7 (ROTE) somente na primeira rolagem
+                    if (rerollBelow7FirstTime && final < 7) {
+                        final = Math.floor(Math.random() * 10) + 1;
+                    }
+
+                    // Avaliar valor do dado
+                    if (again.includes(final)) {
+                        sucessos++;
+                        rolouMaiorQue7 = true;
+                        dadosExtras.push(1);
+                    } else if (final >= 8) {
+                        sucessos++;
+                        rolouMaiorQue7 = true;
+                    } else if (final === 1) {
+                        rolouUmaFalha = true;
+                    }
+                }
+
+                // Rolagens extras
+                while (dadosExtras.reduce((a, b) => a + b, 0) > 0) {
+                    const qtd = dadosExtras.reduce((a, b) => a + b, 0);
+                    dadosExtras = [];
+
+                    for (let j = 0; j < qtd; j++) {
+                        let dado = Math.floor(Math.random() * 10) + 1;
+                        if (again.includes(dado)) {
+                            sucessos++;
+                            rolouMaiorQue7 = true;
+                            dadosExtras.push(1);
+                        } else if (dado >= 8) {
+                            sucessos++;
+                            rolouMaiorQue7 = true;
+                        } else if (dado === 1) {
+                            rolouUmaFalha = true;
+                        }
+                    }
+                }
+
+                // Verificar se foi falha crítica
+                if (rolouUmaFalha && !rolouMaiorQue7) {
+                    falhasCriticas++;
+                }
+
+                // Atualiza contagem
+                if (contagemResultados[sucessos] === undefined) {
+                    contagemResultados[sucessos] = 0;
+                }
+                contagemResultados[sucessos]++;
             }
-          }
+
+            // Calcular probabilidades
+            const probabilidade = {};
+            for (let key in contagemResultados) {
+                probabilidade[key] = contagemResultados[key] / numSimulacoes;
+            }
+
+            const probabilidadeFalhaCritica = falhasCriticas / numSimulacoes;
+
+            // Prob de falha (<= 0 sucessos) - subtrair a falha crítica
+            let sumFalhasOuMenos = 0;
+            for (let resultado in probabilidade) {
+                const r = parseInt(resultado, 10);
+                if (r <= 0) {
+                    sumFalhasOuMenos += probabilidade[resultado];
+                }
+            }
+            const probabilidadeFalha = sumFalhasOuMenos - probabilidadeFalhaCritica;
+
+            // Sucesso crítico (5 ou + sucessos)
+            let probabilidadeSucessoCritico = 0;
+            for (let resultado in probabilidade) {
+                const r = parseInt(resultado, 10);
+                if (r >= 5) {
+                    probabilidadeSucessoCritico += probabilidade[resultado];
+                }
+            }
+
+            const probabilidadeSucesso = 1 - sumFalhasOuMenos - probabilidadeSucessoCritico;
+
+            return {
+                probabilidade,
+                probabilidadeFalhaCritica,
+                probabilidadeFalha,
+                probabilidadeSucesso,
+                probabilidadeSucessoCritico
+            };
         }
 
-        // Verificar se foi falha crítica
-        if (rolouUmaFalha && !rolouMaiorQue7) {
-          falhasCriticas++;
+        function calcularEMostrar() {
+            const numDados = parseInt(document.getElementById("numDados").value, 10);
+            const tagetLocation = parseInt(document.getElementById("TargetingInput").value, 10);
+            const huntVictims = parseInt(document.getElementById("qtdPessoas").value, 10) - 1;
+            const huntHours = parseInt(document.getElementById("qtdHoras").value, 10) - 1;
+
+
+            const rawAgain = document.getElementById("valoresAgain").value.trim();
+            let listaAgain = [];
+            if (rawAgain) {
+                listaAgain = rawAgain
+                    .split(",")
+                    .map(x => parseInt(x.trim(), 10))
+                    .filter(x => !isNaN(x));
+            }
+
+            const rerollOption = document.getElementById("checkReroll").checked;
+            const numSimulacoes = 1000000;
+
+            const {
+                probabilidade,
+                probabilidadeFalhaCritica,
+                probabilidadeFalha,
+                probabilidadeSucesso,
+                probabilidadeSucessoCritico
+            } = calcularProbabilidade(numDados - tagetLocation - huntVictims * 2 + huntHours * 2, numSimulacoes, listaAgain, rerollOption);
+
+            let resultadosStr = "Distribuição de sucessos:\n";
+            const sortedKeys = Object.keys(probabilidade)
+                .map(k => parseInt(k, 10))
+                .sort((a, b) => a - b);
+
+            let sucessos_acumulados = 0;
+
+            let acumulado = 100;
+
+            const maxKeyLength = Math.max(...sortedKeys.map(key => String(key).length));
+            const probColWidth = 10;
+            const acumColWidth = 10;
+            let prevAcumulado = acumulado;
+
+            for (let key of sortedKeys) {
+                const keyStr = String(key);
+                const prob = probabilidade[key] * 100;
+
+                prevAcumulado = acumulado;
+                acumulado -= prob;
+
+                resultadosStr += `Resultado ${keyStr.padEnd(maxKeyLength)} | ` +
+                    `${prob.toFixed(2).padStart(probColWidth)}% | ` +
+                    `${prevAcumulado.toFixed(2).padStart(acumColWidth)}% \n`;
+            }
+
+
+            resultadosStr += "\n";
+            resultadosStr += `Falha Crítica: ${(probabilidadeFalhaCritica * 100).toFixed(2)}%\n`;
+            resultadosStr += `Falha: ${(probabilidadeFalha * 100).toFixed(2)}%\n`;
+            resultadosStr += `Sucesso: ${(probabilidadeSucesso * 100).toFixed(2)}%\n`;
+            resultadosStr += `Sucesso Crítico (5+): ${(probabilidadeSucessoCritico * 100).toFixed(2)}%\n`;
+
+            document.getElementById("resultadosArea").textContent = resultadosStr;
+            // Preparar dados para o gráfico
+            const chartData = [["Sucessos", "Probabilidade"]];
+            for (const [sucessos, prob] of Object.entries(probabilidade)) {
+                chartData.push([sucessos, prob * 100]);
+            }
+
+            drawChart(chartData);
         }
 
-        // Atualiza contagem
-        if (contagemResultados[sucessos] === undefined) {
-          contagemResultados[sucessos] = 0;
+        function calcularChanceDisputa(
+            numDadosAtacante,
+            numDadosDefensor,
+            numSimulacoes = 1000000,
+            rerollAtacante = [],
+            rerollDefensor = [],
+            rerollBelow7FirstTimeAtacante = false,
+            rerollBelow7FirstTimeDefensor = false
+        ) {
+            let vitoriasAtacante = 0;
+            let vitoriasDefensor = 0;
+            let empates = 0;
+
+            for (let i = 0; i < numSimulacoes; i++) {
+                let sucessosAtacante = 0;
+                let sucessosDefensor = 0;
+
+                // Rolagem para o atacante
+                let dadosAtacante = [];
+                for (let d = 0; d < numDadosAtacante; d++) {
+                    dadosAtacante.push(Math.floor(Math.random() * 10) + 1);
+                }
+
+                let dadosExtrasAtacante = [];
+                for (let dado of dadosAtacante) {
+                    let final = dado;
+
+                    // Rerrollar se < 7 (ROTE) somente na primeira rolagem
+                    if (rerollBelow7FirstTimeAtacante && final < 7) {
+                        final = Math.floor(Math.random() * 10) + 1;
+                    }
+
+                    // Avaliar valor do dado
+                    if (rerollAtacante.includes(final)) {
+                        sucessosAtacante++;
+                        dadosExtrasAtacante.push(1);
+                    } else if (final >= 8) {
+                        sucessosAtacante++;
+                    }
+                }
+
+                while (dadosExtrasAtacante.reduce((a, b) => a + b, 0) > 0) {
+                    const qtd = dadosExtrasAtacante.reduce((a, b) => a + b, 0);
+                    dadosExtrasAtacante = [];
+
+                    for (let j = 0; j < qtd; j++) {
+                        let dado = Math.floor(Math.random() * 10) + 1;
+                        if (rerollAtacante.includes(dado)) {
+                            sucessosAtacante++;
+                            dadosExtrasAtacante.push(1);
+                        } else if (dado >= 8) {
+                            sucessosAtacante++;
+                        }
+                    }
+                }
+
+                // Rolagem para o defensor
+                let dadosDefensor = [];
+                for (let d = 0; d < numDadosDefensor; d++) {
+                    dadosDefensor.push(Math.floor(Math.random() * 10) + 1);
+                }
+
+                let dadosExtrasDefensor = [];
+                for (let dado of dadosDefensor) {
+                    let final = dado;
+
+                    // Rerrollar se < 7 (ROTE) somente na primeira rolagem
+                    if (rerollBelow7FirstTimeDefensor && final < 7) {
+                        final = Math.floor(Math.random() * 10) + 1;
+                    }
+
+                    // Avaliar valor do dado
+                    if (rerollDefensor.includes(final)) {
+                        sucessosDefensor++;
+                        dadosExtrasDefensor.push(1);
+                    } else if (final >= 8) {
+                        sucessosDefensor++;
+                    }
+                }
+
+                while (dadosExtrasDefensor.reduce((a, b) => a + b, 0) > 0) {
+                    const qtd = dadosExtrasDefensor.reduce((a, b) => a + b, 0);
+                    dadosExtrasDefensor = [];
+
+                    for (let j = 0; j < qtd; j++) {
+                        let dado = Math.floor(Math.random() * 10) + 1;
+                        if (rerollDefensor.includes(dado)) {
+                            sucessosDefensor++;
+                            dadosExtrasDefensor.push(1);
+                        } else if (dado >= 8) {
+                            sucessosDefensor++;
+                        }
+                    }
+                }
+
+                // Determinar o resultado da disputa
+                if (sucessosAtacante > sucessosDefensor) {
+                    vitoriasAtacante++;
+                } else if (sucessosDefensor > sucessosAtacante) {
+                    vitoriasDefensor++;
+                } else {
+                    empates++;
+                }
+            }
+
+            // Calcular probabilidades
+            const probabilidadeAtacante = vitoriasAtacante / numSimulacoes;
+            const probabilidadeDefensor = vitoriasDefensor / numSimulacoes;
+            const probabilidadeEmpate = empates / numSimulacoes;
+
+            return {
+                probabilidadeAtacante,
+                probabilidadeDefensor,
+                probabilidadeEmpate
+            };
         }
-        contagemResultados[sucessos]++;
-      }
 
-      // Calcular probabilidades
-      const probabilidade = {};
-      for (let key in contagemResultados) {
-        probabilidade[key] = contagemResultados[key] / numSimulacoes;
-      }
+        function calcularEDisputar() {
+            const numDadosAtacante = parseInt(document.getElementById("dadosAtacante").value, 10);
+            const numDadosDefensor = parseInt(document.getElementById("dadosDefensor").value, 10);
 
-      const probabilidadeFalhaCritica = falhasCriticas / numSimulacoes;
+            const rawRerollAtacante = document.getElementById("rerollAtacante").value.trim();
+            const rerollAtacante = rawRerollAtacante
+                ? rawRerollAtacante.split(",").map(x => parseInt(x.trim(), 10)).filter(x => !isNaN(x))
+                : [];
 
-      // Prob de falha (<= 0 sucessos) - subtrair a falha crítica
-      let sumFalhasOuMenos = 0;
-      for (let resultado in probabilidade) {
-        const r = parseInt(resultado, 10);
-        if (r <= 0) {
-          sumFalhasOuMenos += probabilidade[resultado];
+            const rawRerollDefensor = document.getElementById("rerollDefensor").value.trim();
+            const rerollDefensor = rawRerollDefensor
+                ? rawRerollDefensor.split(",").map(x => parseInt(x.trim(), 10)).filter(x => !isNaN(x))
+                : [];
+
+            const rerollBelow7Atacante = document.getElementById("rerollBelow7Atacante").checked;
+            const rerollBelow7Defensor = document.getElementById("rerollBelow7Defensor").checked;
+
+            const numSimulacoes = 1000000;
+
+            const {
+                probabilidadeAtacante,
+                probabilidadeDefensor,
+                probabilidadeEmpate
+            } = calcularChanceDisputa(
+                numDadosAtacante,
+                numDadosDefensor,
+                numSimulacoes,
+                rerollAtacante,
+                rerollDefensor,
+                rerollBelow7Atacante,
+                rerollBelow7Defensor
+            );
+
+            let resultadosStr = "Resultados da disputa:\n";
+            resultadosStr += `Chance do Atacante vencer: ${(probabilidadeAtacante * 100).toFixed(2)}%\n`;
+            resultadosStr += `Chance do Defensor vencer: ${(probabilidadeDefensor * 100).toFixed(2)}%\n`;
+            resultadosStr += `Chance de Empate: ${(probabilidadeEmpate * 100).toFixed(2)}%\n`;
+
+            document.getElementById("chanceSucesso").textContent = resultadosStr;
         }
-      }
-      const probabilidadeFalha = sumFalhasOuMenos - probabilidadeFalhaCritica;
 
-      // Sucesso crítico (5 ou + sucessos)
-      let probabilidadeSucessoCritico = 0;
-      for (let resultado in probabilidade) {
-        const r = parseInt(resultado, 10);
-        if (r >= 5) {
-          probabilidadeSucessoCritico += probabilidade[resultado];
+        google.charts.load('current', { packages: ['corechart'] });
+
+        // Função para desenhar o gráfico
+        function drawChart(dataArray) {
+            const data = google.visualization.arrayToDataTable(dataArray);
+
+            const options = {
+                title: 'Distribuição de Sucessos',
+                titleTextStyle: {
+                    color: '#fff',
+                    fontSize: 20,
+                    bold: true,
+                },
+                backgroundColor: '#222',
+                hAxis: {
+                    title: 'Sucessos',
+                    titleTextStyle: {
+                        color: '#c33',
+                        fontSize: 16,
+                    },
+                    textStyle: {
+                        color: '#eee',
+                    },
+                },
+                vAxis: {
+                    title: 'Probabilidade (%)',
+                    titleTextStyle: {
+                        color: '#c33',
+                        fontSize: 16,
+                    },
+                    textStyle: {
+                        color: '#eee',
+                    },
+                },
+                legend: {
+                    position: 'bottom',
+                    textStyle: {
+                        color: '#eee',
+                    },
+                },
+                colors: ['#c33'],
+                chartArea: {
+                    backgroundColor: '#333',
+                    left: 50,
+                    right: 20,
+                    top: 50,
+                    bottom: 50,
+                    width: '80%',
+                    height: '70%',
+                },
+            };
+
+            const chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+            chart.draw(data, options);
         }
-      }
 
-      // Sucesso comum
-      const probabilidadeSucesso = 1 - sumFalhasOuMenos - probabilidadeSucessoCritico;
+        // Função para expandir/recolher a seção de Caçada
+        function toggleCacada() {
+            const container = document.getElementById("cacadaContainer");
+            const icon = document.getElementById("cacadaIcon");
 
-      return {
-        probabilidade,
-        probabilidadeFalhaCritica,
-        probabilidadeFalha,
-        probabilidadeSucesso,
-        probabilidadeSucessoCritico
-      };
-    }
+            if (container.style.display === "none") {
+                container.style.display = "flex";
+                icon.textContent = "[-]";
+            } else {
+                container.style.display = "none";
+                icon.textContent = "[+]";
+            }
+        }
+        function toggleTarget() {
+            const container = document.getElementById("targetContainer");
+            const icon = document.getElementById("targetIcon");
 
-    function calcularEMostrar() {
-      const numDados = parseInt(document.getElementById("numDados").value, 10);
-	  
-	  const tagetLocation = parseInt(document.getElementById("TargetingInput").value, 10);
+            if (container.style.display === "none") {
+                container.style.display = "flex";
+                icon.textContent = "[-]";
+            } else {
+                container.style.display = "none";
+                icon.textContent = "[+]";
+            }
+        }
 
-      const rawAgain = document.getElementById("valoresAgain").value.trim();
-      let listaAgain = [];
-      if (rawAgain) {
-        listaAgain = rawAgain
-          .split(",")
-          .map(x => parseInt(x.trim(), 10))
-          .filter(x => !isNaN(x));
-      }
 
-      const rerollOption = document.getElementById("checkReroll").checked;
-      const numSimulacoes = 500000; // Ajuste conforme necessário
+        function showTab(tabId) {
+            const tabs = document.querySelectorAll(".tab");
+            const contents = document.querySelectorAll(".tab-content");
 
-      const {
-        probabilidade,
-        probabilidadeFalhaCritica,
-        probabilidadeFalha,
-        probabilidadeSucesso,
-        probabilidadeSucessoCritico
-      } = calcularProbabilidade(numDados-tagetLocation, numSimulacoes, listaAgain, rerollOption);
+            tabs.forEach(tab => tab.classList.remove("active"));
+            contents.forEach(content => content.classList.remove("active"));
 
-      let resultadosStr = "Distribuição de sucessos:\n";
-      const sortedKeys = Object.keys(probabilidade)
-                               .map(k => parseInt(k, 10))
-                               .sort((a,b) => a - b);
+            const clickedTab = [...tabs].find(tab => tab.getAttribute("onclick") === `showTab('${tabId}')`);
+            if (clickedTab) clickedTab.classList.add("active");
 
-      for (let key of sortedKeys) {
-        resultadosStr += `Resultado ${key}: ${(probabilidade[key] * 100).toFixed(2)}%\n`;
-      }
+            const activeContent = document.getElementById(tabId);
+            if (activeContent) activeContent.classList.add("active");
+        }
 
-      resultadosStr += "\n";
-      resultadosStr += `Falha Crítica: ${(probabilidadeFalhaCritica * 100).toFixed(2)}%\n`;
-      resultadosStr += `Falha: ${(probabilidadeFalha * 100).toFixed(2)}%\n`;
-      resultadosStr += `Sucesso: ${(probabilidadeSucesso * 100).toFixed(2)}%\n`;
-      resultadosStr += `Sucesso Crítico (5+): ${(probabilidadeSucessoCritico * 100).toFixed(2)}%\n`;
+        function showModulo(moduloId) {
+            const modulos = document.querySelectorAll(".modulo");
+            const contents = document.querySelectorAll(".modulo-content");
 
-      document.getElementById("resultadosArea").textContent = resultadosStr;
-    }
-  </script>
+            modulos.forEach(modulo => modulo.classList.remove("active"));
+            contents.forEach(content => content.classList.remove("active"));
+
+            const clickedModulo = [...modulos].find(modulo => modulo.getAttribute("onclick") === `showModulo('${moduloId}')`);
+            if (clickedModulo) clickedModulo.classList.add("active");
+
+            const activeContent = document.getElementById(moduloId);
+            if (activeContent) activeContent.classList.add("active");
+        }
+
+
+    </script>
 
 </body>
+
 </html>
