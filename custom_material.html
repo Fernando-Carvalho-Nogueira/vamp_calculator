@@ -6,9 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Material de Apoio</title>
     <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
 
     <style>
-
         .hidden-table {
             display: none;
             margin-top: 1rem;
@@ -16,6 +16,8 @@
             border-collapse: collapse;
             width: 100%;
             border: 1px solid #444;
+            border-radius: 4px;
+            overflow: hidden;
         }
 
         .hidden-table caption {
@@ -23,10 +25,11 @@
             margin-bottom: 0.5rem;
             color: #fff;
             text-align: left;
-            caption-side: top; /* Título aparece acima da tabela */
+            caption-side: top;
         }
 
-        .hidden-table th, .hidden-table td {
+        .hidden-table th,
+        .hidden-table td {
             border: 1px solid #444;
             padding: 0.5rem;
             text-align: left;
@@ -34,19 +37,53 @@
         }
 
         .hidden-table th {
-            background-color: #333;
+            background-color: #444;
         }
 
-    </style>
+        .accordion-content a {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
 
+        .accordion-content a::before {
+            content: '\25B6';
+            color: #c33;
+            font-size: 0.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-content a:hover::before {
+            transform: scale(1.2);
+        }
+
+        .toggle-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .accordion-header.open .toggle-icon {
+            transform: rotate(45deg);
+        }
+
+        .accordion {
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            border-radius: 6px;
+        }
+    </style>
 </head>
 
 <body>
     <header>
-        <h1>Material de Apoio</h1>
-    </header>
-    <main>
+        <div style="display: flex; align-items: center; position: relative;">
+            <h1 style="flex: 1; text-align: center;">Material de Apoio</h1>
+            <button class="menu-hamburguer" onclick="toggleMenu()">☰</button>
+        </div>
 
+        <div class="menu-container"></div> <!-- O menu será carregado aqui -->
+    </header>
+    </header>
+
+    <main>
         <div class="accordion">
             <div class="accordion-header">
                 <span>Basic</span>
@@ -59,7 +96,6 @@
                 <a href="assets/Basic/SunDMG.jpg">Bronzeamento</a>
             </div>
         </div>
-
 
         <div class="accordion">
             <div class="accordion-header">
@@ -94,21 +130,20 @@
 
                 <a href="#" class="expand-link" data-table-id="table1">Courtesan</a>
                 <table id="table1" class="hidden-table">
-                    <caption> A courtesan exists to see others enjoy themselves. He revels not for himself, but to let others bask in his revelry. He’s a master of the art of enjoyment. </caption>
+                    <caption> A courtesan exists to see others enjoy themselves. </caption>
                     <tr>
                         <th>Single Willpower:</th>
                         <td>Put yourself out for another’s pleasure.</td>
                     </tr>
                     <tr>
                         <th>All Willpower:</th>
-                        <td>Be the last one dancing when the party’s 
-                            on fire. </td>
+                        <td>Be the last one dancing when the party’s on fire.</td>
                     </tr>
                 </table>
 
                 <a href="#" class="expand-link" data-table-id="table2">Follower</a>
                 <table id="table2" class="hidden-table">
-                    <caption> A follower needs direction, and is loathe to come up with it on his own. He devotes much of his attention to finding the right person to offer that direction.  </caption>
+                    <caption> A follower needs direction, and is loathe to come up with it on his own. </caption>
                     <tr>
                         <th>Single Willpower:</th>
                         <td>Follow a directive blindly, for the sake of following.</td>
@@ -118,7 +153,7 @@
                         <td>Follow a dangerous directive without hesitation.</td>
                     </tr>
                 </table>
-                
+
             </div>
         </div>
 
@@ -131,8 +166,10 @@
                 <a href="assets/Campanha/Nikiti.png">Mapa Nikiti</a>
             </div>
         </div>
+
         <button onclick="window.history.back()">Voltar</button>
     </main>
+
     <script>
         const accordions = document.querySelectorAll('.accordion');
         accordions.forEach(accordion => {
@@ -144,18 +181,17 @@
                 const isOpen = content.style.display === 'block';
                 content.style.display = isOpen ? 'none' : 'block';
                 icon.textContent = isOpen ? '+' : '-';
+                header.classList.toggle('open');
             });
         });
 
-        // Gerencia a exibição das tabelas
         const links = document.querySelectorAll('.expand-link');
         links.forEach(link => {
             link.addEventListener('click', (event) => {
-                event.preventDefault(); // Previne a navegação do link
-                const tableId = link.getAttribute('data-table-id'); // Obtém o ID da tabela
+                event.preventDefault();
+                const tableId = link.getAttribute('data-table-id');
                 const table = document.getElementById(tableId);
 
-                // Alterna a visibilidade da tabela
                 if (table.style.display === 'none' || !table.style.display) {
                     table.style.display = 'table';
                 } else {

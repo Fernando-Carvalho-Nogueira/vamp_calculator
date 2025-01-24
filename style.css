@@ -6,17 +6,19 @@ body {
     color: #eee;
 }
 
-/* Estilo do header */
 header {
     background-color: #600;
-    padding: 1rem;
+    padding: 1em;
     text-align: center;
+    position: relative;
 }
 
 header h1 {
     margin: 0;
     font-size: 2em;
     color: #fff;
+    flex: 1; 
+    text-align: center; /* Garante centralização do texto */
 }
 
 /* Área principal */
@@ -24,7 +26,7 @@ main {
     max-width: 90%; /* Permite que o main ocupe até 90% da largura da página */
     margin: 2rem auto;
     background-color: #222;
-    padding: 1.5rem;
+    padding: 0.5rem;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
 }
@@ -61,12 +63,12 @@ input[type="checkbox"] {
     cursor: pointer;
 }
 
-/* Botões */
 button {
-    background-color: #900;
+    background-color: #600;
+    font-weight: bold;
     color: #fff;
     border: none;
-    padding: 0.75rem 1.5rem;
+    padding: 1rem 2rem;
     font-size: 1rem;
     cursor: pointer;
     border-radius: 4px;
@@ -74,7 +76,7 @@ button {
 }
 
 button:hover {
-    background-color: #c00;
+    background-color: #800;
 }
 
 /* Formatação de pré-formatados */
@@ -254,4 +256,48 @@ footer {
 
 .accordion-content a:hover {
     text-decoration: underline;
+}
+
+.menu-hamburguer {
+    position: absolute; /* Permite posicionamento independente */
+    right: 1rem; /* Alinha à direita com espaçamento */
+    top: 50%; /* Alinha verticalmente ao centro */
+    transform: translateY(-50%); /* Ajusta a posição vertical para o centro */
+    font-size: 1.5rem;
+    color: white;
+    background: none;
+    border: none;
+    cursor: pointer;
+}
+
+.menu-hamburguer.open + .nav-menu {
+    display: block;
+}
+
+.nav-menu {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    background-color: #222;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+.nav-menu a {
+    display: block;
+    color: #fff;
+    text-decoration: none;
+    margin: 0.5rem 0;
+}
+
+.nav-menu a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .menu-hamburguer {
+        display: block;
+    }
 }
