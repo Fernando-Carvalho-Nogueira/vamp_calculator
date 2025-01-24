@@ -6,7 +6,7 @@
     <title>Vampire the Requiem: Rio 1912</title>
 
     <script src="https://www.gstatic.com/charts/loader.js"></script>
-     <link type="text/css" rel="stylesheet" href="style.css" />
+    <link type="text/css" rel="stylesheet" href="style.css" />
 </head>
 
 <body>
@@ -31,32 +31,32 @@
             <label for="valoresAgain">Valores de rerolagem Atacante(separados por vírgula):</label>
             <input type="text" id="rerollAtacante" placeholder="Ex: 10 ou 8,9,10" />
 
-          <div style="margin-bottom: 1rem;">
+            <div style="margin-bottom: 1rem;">
                 <input type="checkbox" id="rerollBelow7Atacante" />
                 <label for="checkReroll" style="display:inline; font-weight: normal;">
                     ROTE Action Atacante
                 </label>
             </div>
-			
+
             <label for="DadosDef">Número de Dados do Defensor:</label>
             <input type="number" id="numDadosDef" value="5" />
-			
-			<label for="valoresAgain">Valores de rerolagem Defensor(separados por vírgula):</label>
+
+            <label for="valoresAgain">Valores de rerolagem Defensor(separados por vírgula):</label>
             <input type="text" id="rerollDefensor" placeholder="Ex: 10 ou 8,9,10" />
 
-          <div style="margin-bottom: 1rem;">
+            <div style="margin-bottom: 1rem;">
                 <input type="checkbox" id="rerollBelow7Defensor" />
                 <label for="checkReroll" style="display:inline; font-weight: normal;">
                     ROTE Action Defensor
                 </label>
             </div>
-			
+
             <label for="numDadosPen">Penalidade Imposta Ao Atacante</label>
             <input type="number" id="atkPenalidade" value="0" />
 
-			<button onclick="calcularDisputa()">Calcular</button>
-			
-            <div id="textResult" class="tab-content active">
+            <button onclick="calcularDisputa()">Calcular</button>
+
+            <div id="textResultDisputa" class="tab-content active">
                 <h2>Chance de Sucesso:</h2>
                 <pre id="chanceSucesso"></pre>
             </div>
@@ -443,7 +443,7 @@
         function calcularDisputa() {
             const numDadosAtacante = parseInt(document.getElementById("numDadosAtk").value, 10);
             const numDadosDefensor = parseInt(document.getElementById("numDadosDef").value, 10);
-			const penalidadeATK = parseInt(document.getElementById("atkPenalidade").value, 10);
+            const penalidadeATK = parseInt(document.getElementById("atkPenalidade").value, 10);
 
             const rawRerollAtacante = document.getElementById("rerollAtacante").value.trim();
             const rerollAtacante = rawRerollAtacante
@@ -524,13 +524,12 @@
                 },
                 colors: ['#c33'],
                 chartArea: {
-                    backgroundColor: '#333',
                     left: 50,
                     right: 20,
-                    top: 50,
+                    top: 20,
                     bottom: 50,
-                    width: '80%',
-                    height: '70%',
+                    width: '90%', // Aumenta a largura ocupada pelo gráfico
+                    height: '80%' // Aumenta a altura ocupada pelo gráfico
                 },
             };
 
@@ -564,19 +563,24 @@
             }
         }
 
-
         function showTab(tabId) {
             const tabs = document.querySelectorAll(".tab");
             const contents = document.querySelectorAll(".tab-content");
 
             tabs.forEach(tab => tab.classList.remove("active"));
-            contents.forEach(content => content.classList.remove("active"));
+            contents.forEach(content => {
+                content.classList.remove("active");
+                content.style.display = "none"; // Garante que o conteúdo inativo seja escondido
+            });
 
             const clickedTab = [...tabs].find(tab => tab.getAttribute("onclick") === `showTab('${tabId}')`);
             if (clickedTab) clickedTab.classList.add("active");
 
             const activeContent = document.getElementById(tabId);
-            if (activeContent) activeContent.classList.add("active");
+            if (activeContent) {
+                activeContent.classList.add("active");
+                activeContent.style.display = "block"; // Garante que o conteúdo ativo seja exibido
+            }
         }
 
         function showModulo(moduloId) {

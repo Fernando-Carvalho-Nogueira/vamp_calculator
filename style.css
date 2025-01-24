@@ -21,7 +21,7 @@ header h1 {
 
 /* Área principal */
 main {
-    max-width: 600px;
+    max-width: 90%; /* Permite que o main ocupe até 90% da largura da página */
     margin: 2rem auto;
     background-color: #222;
     padding: 1.5rem;
